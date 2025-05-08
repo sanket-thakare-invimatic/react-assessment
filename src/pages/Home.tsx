@@ -1,6 +1,6 @@
 import React from 'react';
-import { Card, Row, Col, Typography, Avatar } from 'antd';
-import { UserOutlined, MailOutlined, CalendarOutlined, ManOutlined, WomanOutlined } from '@ant-design/icons';
+import { Card, Row, Col, Typography } from 'antd';
+import { UserOutlined, MailOutlined } from '@ant-design/icons';
 
 /**
  * Home page displays user details in a 2-column format.
@@ -11,11 +11,11 @@ const Home: React.FC = () => {
   const user = JSON.parse(localStorage.getItem('user') || '{}');
 
   // Helper to get gender icon
-  const genderIcon = (gender: string) => {
-    if (gender === 'male') return <ManOutlined style={{ color: '#6366f1' }} />;
-    if (gender === 'female') return <WomanOutlined style={{ color: '#d946ef' }} />;
-    return <UserOutlined />;
-  };
+  // const genderIcon = (gender: string) => {
+  //   if (gender === 'male') return <ManOutlined style={{ color: '#6366f1' }} />;
+  //   if (gender === 'female') return <WomanOutlined style={{ color: '#d946ef' }} />;
+  //   return <UserOutlined />;
+  // };
 
   return (
     <Card

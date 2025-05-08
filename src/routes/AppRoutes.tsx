@@ -16,9 +16,9 @@ const isAuthenticated = () => {
 };
 
 // PrivateRoute wrapper
-const PrivateRoute = ({ children }: { children: React.ReactNode }) => {
-  return isAuthenticated() ? <>{children}</> : <Navigate to="/login" />;
-};
+//const PrivateRoute = ({ children }: { children: React.ReactNode }) => {
+  //return isAuthenticated() ? <>{children}</> : <Navigate to="/login" />;
+//};
 
 const AppRoutes = () => (
   <Routes>
