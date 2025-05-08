@@ -3,10 +3,12 @@ import { Routes, Route, Navigate } from 'react-router-dom';
 import Login from '../pages/Login';
 import Register from '../pages/Register';
 import ForgotPassword from '../pages/ForgotPassword';
+import PrivateLayout from '../layouts/PrivateLayout';
+import Home from '../pages/Home';
+import InfiniteScroll from '../pages/InfiniteScroll';
+import DragDrop from '../pages/DragDrop';
 // Import page components (to be created)
-// import Home from '../pages/Home';
 // import DragDrop from '../pages/DragDrop';
-// import InfiniteScroll from '../pages/InfiniteScroll';
 
 // Placeholder authentication check (replace with real logic)
 const isAuthenticated = () => {
@@ -26,30 +28,11 @@ const AppRoutes = () => (
     <Route path="/forgot-password" element={<ForgotPassword />} />
 
     {/* Private routes */}
-    <Route
-      path="/"
-      element={
-        <PrivateRoute>
-          <div>Home Page</div>
-        </PrivateRoute>
-      }
-    />
-    <Route
-      path="/drag-drop"
-      element={
-        <PrivateRoute>
-          <div>Drag and Drop Page</div>
-        </PrivateRoute>
-      }
-    />
-    <Route
-      path="/infinite-scroll"
-      element={
-        <PrivateRoute>
-          <div>Infinite Scroll Page</div>
-        </PrivateRoute>
-      }
-    />
+    <Route element={<PrivateLayout />}>
+      <Route path="/" element={<Home />} />
+      <Route path="/drag-drop" element={<DragDrop />} />
+      <Route path="/infinite-scroll" element={<InfiniteScroll />} />
+    </Route>
     {/* Fallback route */}
     <Route path="*" element={<Navigate to={isAuthenticated() ? '/' : '/login'} />} />
   </Routes>

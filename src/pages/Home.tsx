@@ -1,0 +1,52 @@
+import React from 'react';
+import { Card, Row, Col, Typography, Avatar } from 'antd';
+import { UserOutlined, MailOutlined, CalendarOutlined, ManOutlined, WomanOutlined } from '@ant-design/icons';
+
+/**
+ * Home page displays user details in a 2-column format.
+ * User details are retrieved from localStorage (set on login/register).
+ */
+const Home: React.FC = () => {
+  // Try to get user details from localStorage
+  const user = JSON.parse(localStorage.getItem('user') || '{}');
+
+  // Helper to get gender icon
+  const genderIcon = (gender: string) => {
+    if (gender === 'male') return <ManOutlined style={{ color: '#6366f1' }} />;
+    if (gender === 'female') return <WomanOutlined style={{ color: '#d946ef' }} />;
+    return <UserOutlined />;
+  };
+
+  return (
+    <Card
+      title={<span><UserOutlined /> User Details</span>}
+      style={{ maxWidth: 600, margin: 'auto', background: '#fff', borderRadius: 16, boxShadow: '0 4px 32px #a78bfa22' }}
+      headStyle={{ background: '#ede9fe', fontWeight: 700, fontSize: 20 }}
+    >
+      <Row gutter={[24, 24]}>
+        <Col span={12}>
+          <Typography.Text strong>First Name:</Typography.Text>
+          <div>{user.firstName || '-'}</div>
+        </Col>
+        <Col span={12}>
+          <Typography.Text strong>Last Name:</Typography.Text>
+          <div>{user.lastName || '-'}</div>
+        </Col>
+        <Col span={12}>
+          <Typography.Text strong>Email:</Typography.Text>
+          <div><MailOutlined /> {user.email || '-'}</div>
+        </Col>
+        <Col span={12}>
+          <Typography.Text strong>Date of Birth:</Typography.Text>
+          <div><CalendarOutlined /> {user.dob ? new Date(user.dob).toLocaleDateString() : '-'}</div>
+        </Col>
+        <Col span={12}>
+          <Typography.Text strong>Gender:</Typography.Text>
+          <div>{genderIcon(user.gender)} {user.gender ? user.gender.charAt(0).toUpperCase() + user.gender.slice(1) : '-'}</div>
+        </Col>
+      </Row>
+    </Card>
+  );
+};
+
+export default Home; 

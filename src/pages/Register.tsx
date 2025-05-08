@@ -52,9 +52,19 @@ const Register: React.FC = () => {
                 email: values.email,
                 password: values.password,
               };
-              await axios.post('https://second-brain-web.onrender.com/api/auth/register', payload);
-              setApiSuccess('Registration successful! Redirecting to login...');
-              setTimeout(() => navigate('/login'), 1500);
+              const response = await axios.post('https://second-brain-web.onrender.com/api/auth/register', payload);
+              // Save authToken and log user in
+              if (response.data && response.data.authToken) {
+                localStorage.setItem('token', response.data.authToken);
+                if (response.data.user) {
+                  localStorage.setItem('user', JSON.stringify(response.data.user));
+                }
+                setApiSuccess('Registration successful! Redirecting to home...');
+                setTimeout(() => navigate('/'), 1200);
+              } else {
+                setApiSuccess('Registration successful! Please login.');
+                setTimeout(() => navigate('/login'), 1200);
+              }
             } catch (error: any) {
               message.error(error.response?.data?.message || 'Registration failed. Please try again.');
             } finally {

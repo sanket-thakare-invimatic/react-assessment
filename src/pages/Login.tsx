@@ -37,8 +37,11 @@ const Login: React.FC = () => {
             setApiSuccess(null);
             try {
               const response = await axios.post('https://second-brain-web.onrender.com/api/auth/login', values);
-              // On success, store token and redirect
+              // On success, store token and user details and redirect
               localStorage.setItem('token', response.data.token);
+              if (response.data.user) {
+                localStorage.setItem('user', JSON.stringify(response.data.user));
+              }
               setApiSuccess('Login successful! Redirecting...');
               setTimeout(() => navigate('/'), 1200);
             } catch (error: any) {
