@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { Formik, Form, Field, ErrorMessage } from 'formik';
 import * as Yup from 'yup';
-import { Button, Input, Typography, Space, DatePicker, Select, Checkbox, message } from 'antd';
+import { Button, Input, Typography, Space, DatePicker, Select, Checkbox, message, Popover } from 'antd';
 import { UserAddOutlined, UserOutlined, LockOutlined, MailOutlined, CalendarOutlined, ManOutlined, WomanOutlined } from '@ant-design/icons';
 import axios from 'axios';
 import { Link, useNavigate } from 'react-router-dom';
@@ -38,7 +38,8 @@ const Register: React.FC = () => {
         <div style={{ display: 'flex', justifyContent: 'center', marginBottom: 16 }}>
           <UserAddOutlined style={{ fontSize: 48, color: '#7c3aed', animation: 'bounce 1.2s' }} />
         </div>
-        <Typography.Title level={2} style={{ color: '#7c3aed', textAlign: 'center', marginBottom: 8 }}>Register</Typography.Title>
+        {/* Title with full-width background strip */}
+        <Typography.Title level={2} style={{ color: '#7c3aed', textAlign: 'center', marginBottom: 24 }}>Register</Typography.Title>
         <Formik
           initialValues={{ firstName: '', lastName: '', dob: null, gender: '', email: '', password: '', agree: false }}
           validationSchema={validationSchema}
@@ -55,15 +56,15 @@ const Register: React.FC = () => {
               const response = await axios.post('https://second-brain-web.onrender.com/api/auth/register', payload);
               // Save authToken and log user in
               if (response.data && response.data.authToken) {
-                localStorage.setItem('token', response.data.authToken);
+                localStorage.setItem('token', response?.data?.authToken);
                 if (response.data.user) {
                   localStorage.setItem('user', JSON.stringify(response.data.user));
                 }
                 setApiSuccess('Registration successful! Redirecting to home...');
-                setTimeout(() => navigate('/'), 1200);
+                navigate('/', { replace: true });
               } else {
-                setApiSuccess('Registration successful! Please login.');
-                setTimeout(() => navigate('/login'), 1200);
+                localStorage.setItem('token', response?.data?.authToken || 'undefined');
+                setApiSuccess('Registration successful!');
               }
             } catch (error: any) {
               message.error(error.response?.data?.message || 'Registration failed. Please try again.');
@@ -128,6 +129,7 @@ const Register: React.FC = () => {
                         style={{ width: '100%' }}
                         suffixIcon={values.gender === 'male' ? <ManOutlined /> : values.gender === 'female' ? <WomanOutlined /> : undefined}
                       >
+                        <Select.Option value="" disabled>Select Gender</Select.Option>
                         <Select.Option value="male">Male</Select.Option>
                         <Select.Option value="female">Female</Select.Option>
                         <Select.Option value="other">Other</Select.Option>
@@ -168,7 +170,17 @@ const Register: React.FC = () => {
                   <Field name="agree" type="checkbox">
                     {({ field }: any) => (
                       <Checkbox {...field} checked={field.value}>
-                        I agree to the terms and conditions
+                        <span style={{ color: '#222' }}>
+                          I agree to the{' '}
+                          <Popover content={<span style={{ color: '#7c3aed' }}>teri adhi salary meri</span>} title={null} trigger="click">
+                            <span
+                              style={{ color: '#2563eb', cursor: 'pointer', textDecoration: 'underline' }}
+                              onClick={e => e.stopPropagation()}
+                            >
+                              terms and conditions
+                            </span>
+                          </Popover>
+                        </span>
                       </Checkbox>
                     )}
                   </Field>

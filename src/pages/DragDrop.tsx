@@ -43,7 +43,10 @@ const DragDrop: React.FC = () => {
       setUsers(prev => prev.filter((_, idx) => idx !== index));
       setColumns(prev => {
         const newCol = { ...prev };
-        newCol[to as keyof typeof prev].items = [user, ...newCol[to as keyof typeof prev].items];
+        // Prevent duplicate: only add if not already present in the column
+        if (!newCol[to as keyof typeof prev].items.some(u => u.id === user.id)) {
+          newCol[to as keyof typeof prev].items = [user, ...newCol[to as keyof typeof prev].items];
+        }
         return newCol;
       });
     }
@@ -53,14 +56,20 @@ const DragDrop: React.FC = () => {
       const fromCol = columns[from as keyof typeof columns];
       const toCol = columns[to as keyof typeof columns];
       const [moved] = fromCol.items.splice(index, 1);
-      toCol.items.unshift(moved);
+      // Prevent duplicate: only add if not already present
+      if (!toCol.items.some(u => u.id === moved.id)) {
+        toCol.items.unshift(moved);
+      }
       setColumns({ ...columns });
     }
     // Move from project column back to top row
     else if (from.startsWith('project') && to === 'users') {
       const fromCol = columns[from as keyof typeof columns];
       const [moved] = fromCol.items.splice(index, 1);
-      setUsers(prev => [moved, ...prev]);
+      // Prevent duplicate: only add if not already present
+      if (!users.some(u => u.id === moved.id)) {
+        setUsers(prev => [moved, ...prev]);
+      }
       setColumns({ ...columns });
     }
     setDragSource(null);
@@ -71,7 +80,10 @@ const DragDrop: React.FC = () => {
 
   return (
     <div style={{ maxWidth: 1200, margin: 'auto', padding: 24 }}>
-      <Typography.Title level={2} style={{ color: '#7c3aed', textAlign: 'center' }}>Drag and Drop Team Assignment</Typography.Title>
+      {/* Title with full-width background strip */}
+      <div style={{ width: '100vw', marginLeft: 'calc(-50vw + 50%)', background: '#ede9fe', padding: '24px 0', marginBottom: 32 }}>
+        <Typography.Title level={2} style={{ color: '#7c3aed', textAlign: 'center', margin: 0 }}>Drag and Drop Team Assignment</Typography.Title>
+      </div>
       {/* Top row: draggable user cards */}
       <Row
         gutter={[16, 16]}
@@ -92,6 +104,9 @@ const DragDrop: React.FC = () => {
                 color: '#222',
                 boxShadow: '0 2px 8px #a78bfa22',
                 cursor: 'grab',
+                minHeight: 120, // Make card taller
+                display: 'flex',
+                alignItems: 'center',
               }}
             >
               <div style={{ display: 'flex', alignItems: 'center', gap: 16 }}>

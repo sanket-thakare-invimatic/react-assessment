@@ -58,21 +58,29 @@ const Sidebar: React.FC = () => {
       onCollapse={setCollapsed}
       width={220}
       collapsedWidth={90}
-      style={{ background: '#7c3aed', minHeight: '100vh', boxShadow: '2px 0 8px #a78bfa22' }}
+      style={{
+        background: '#7c3aed',
+        minHeight: '100vh',
+        boxShadow: '2px 0 8px #a78bfa22',
+        position: 'fixed',
+        top: 0,
+        left: 0,
+        height: '100vh',
+        zIndex: 100,
+        display: 'flex',
+        flexDirection: 'column',
+      }}
       trigger={null}
     >
       <div style={{ display: 'flex', flexDirection: 'column', height: '100%' }}>
-        {/* Logo/Expand-Collapse Button at the top */}
+        {/* Expand/Collapse Button at the top (no Home icon) */}
         <div style={{ padding: 16, textAlign: 'center', cursor: 'pointer' }} onClick={() => setCollapsed(!collapsed)}>
-          <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
-            <HomeOutlined style={{ fontSize: 36, color: '#fff', marginBottom: 8 }} />
-            <Button
-              type="text"
-              icon={collapsed ? <MenuUnfoldOutlined style={{ fontSize: 24, color: '#fff' }} /> : <MenuFoldOutlined style={{ fontSize: 24, color: '#fff' }} />}
-              style={{ background: 'none', border: 'none' }}
-              aria-label={collapsed ? 'Expand sidebar' : 'Collapse sidebar'}
-            />
-          </div>
+          <Button
+            type="text"
+            icon={collapsed ? <MenuUnfoldOutlined style={{ fontSize: 24, color: '#fff' }} /> : <MenuFoldOutlined style={{ fontSize: 24, color: '#fff' }} />}
+            style={{ background: 'none', border: 'none' }}
+            aria-label={collapsed ? 'Expand sidebar' : 'Collapse sidebar'}
+          />
         </div>
         {/* Navigation Menu */}
         <Menu
@@ -101,16 +109,16 @@ const Sidebar: React.FC = () => {
           ))}
         </Menu>
         {/* Logout Button */}
-        <div style={{ padding: 16, textAlign: 'center' }}>
+        <div style={{ padding: 16, textAlign: 'center', marginTop: 'auto' }}>
           <Tooltip title="Logout" placement="right">
             <Button
               type="text"
-              icon={<LogoutOutlined style={{ fontSize: 28, color: '#d32f2f' }} />}
+              icon={<LogoutOutlined style={{ fontSize: 28, color: '#e11d48' }} />}
               onClick={handleLogout}
               style={{ background: 'none', border: 'none' }}
               aria-label="Logout"
             >
-              {!collapsed && <span style={{ color: '#d32f2f', marginLeft: 8, fontWeight: 600 }}>Logout</span>}
+              {!collapsed && <span style={{ color: '#e11d48', marginLeft: 8, fontWeight: 600 }}>Logout</span>}
             </Button>
           </Tooltip>
         </div>

@@ -15,7 +15,7 @@ const PrivateLayout: React.FC = () => {
   return (
     <Layout style={{ minHeight: '100vh' }}>
       <Sidebar />
-      <Content style={{ background: '#f9f6fd', padding: 32, minHeight: '100vh' }}>
+      <Content style={{ background: '#f9f6fd', padding: 32, minHeight: '100vh', marginLeft: 220 }}>
         <Outlet />
       </Content>
     </Layout>

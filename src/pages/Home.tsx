@@ -20,7 +20,7 @@ const Home: React.FC = () => {
   return (
     <Card
       title={<span><UserOutlined /> User Details</span>}
-      style={{ maxWidth: 600, margin: 'auto', background: '#fff', borderRadius: 16, boxShadow: '0 4px 32px #a78bfa22' }}
+      style={{ width: '80%', maxWidth: 900, margin: 'auto', background: '#fff', borderRadius: 16, boxShadow: '0 4px 32px #a78bfa22' }}
       headStyle={{ background: '#ede9fe', fontWeight: 700, fontSize: 20 }}
     >
       <Row gutter={[24, 24]}>
@@ -37,12 +37,20 @@ const Home: React.FC = () => {
           <div><MailOutlined /> {user.email || '-'}</div>
         </Col>
         <Col span={12}>
-          <Typography.Text strong>Date of Birth:</Typography.Text>
-          <div><CalendarOutlined /> {user.dob ? new Date(user.dob).toLocaleDateString() : '-'}</div>
+          <Typography.Text strong>Status:</Typography.Text>
+          <div>{user.status || '-'}</div>
         </Col>
         <Col span={12}>
-          <Typography.Text strong>Gender:</Typography.Text>
-          <div>{genderIcon(user.gender)} {user.gender ? user.gender.charAt(0).toUpperCase() + user.gender.slice(1) : '-'}</div>
+          <Typography.Text strong>Last Login:</Typography.Text>
+          <div>{user.lastLogin ? new Date(user.lastLogin).toLocaleString() : '-'}</div>
+        </Col>
+        <Col span={12}>
+          <Typography.Text strong>Created At:</Typography.Text>
+          <div>{user.createdAt ? new Date(user.createdAt).toLocaleString() : '-'}</div>
+        </Col>
+        <Col span={12}>
+          <Typography.Text strong>Updated At:</Typography.Text>
+          <div>{user.updatedAt ? new Date(user.updatedAt).toLocaleString() : '-'}</div>
         </Col>
       </Row>
     </Card>

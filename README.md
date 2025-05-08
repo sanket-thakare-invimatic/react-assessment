@@ -10,7 +10,7 @@ A modern authentication app built with React, TypeScript, Ant Design, Formik, an
 - **Purple-themed UI** using Ant Design's theming
 - **Formik** for robust form handling and validation
 - **Yup** for schema-based validation
-- **Axios** for API requests
+- **Axios** for API requests (via a custom `useApi` hook)
 - **Error Boundaries** for robust error handling
 - **Private/Public routes** using React Router
 - **PrivateLayout**: Sidebar and navigation only for authenticated users
@@ -26,7 +26,7 @@ A modern authentication app built with React, TypeScript, Ant Design, Formik, an
 src/
   components/      // Reusable UI components (e.g., ErrorBoundary)
   pages/           // Page-level components (Login, Register, InfiniteScroll, DragDrop, etc.)
-  hooks/           // Custom React hooks (e.g., useInfiniteDogImages)
+  hooks/           // Custom React hooks (e.g., useInfiniteDogImages, useApi)
   utils/           // Utility functions (API, helpers)
   routes/          // Routing logic (AppRoutes.tsx)
   layouts/         // Layout components (Sidebar, PrivateLayout, etc.)
@@ -60,6 +60,19 @@ src/
 - Loads more images as the user scrolls to the bottom
 - Responsive grid layout with Ant Design
 - Extensible for other APIs or infinite scroll use cases
+
+## API Calls
+- All API calls are handled using the custom `useApi` hook in `src/hooks/useApi.ts`.
+- The hook supports GET, POST, PUT, DELETE, and manages loading, error, and response state.
+- Example usage:
+  ```tsx
+  const { data, loading, error, callApi } = useApi();
+  // To make a GET request:
+  useEffect(() => { callApi('/api/endpoint'); }, []);
+  // To make a POST request:
+  callApi('/api/endpoint', 'POST', { key: 'value' });
+  ```
+- This ensures consistent error handling and state management for all API interactions.
 
 ## Getting Started
 

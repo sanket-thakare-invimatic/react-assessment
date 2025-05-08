@@ -31,15 +31,26 @@ const InfiniteScroll: React.FC = () => {
 
   return (
     <div style={{ maxWidth: 900, margin: 'auto', padding: 24 }}>
-      <Typography.Title level={2} style={{ color: '#7c3aed', textAlign: 'center' }}>Infinite Dog Gallery</Typography.Title>
+      {/* Title with full-width background strip */}
+      <div style={{ width: '100vw', marginLeft: 'calc(-50vw + 50%)', background: '#ede9fe', padding: '24px 0', marginBottom: 32 }}>
+        <Typography.Title level={2} style={{ color: '#7c3aed', textAlign: 'center', margin: 0 }}>Infinite Dog Gallery</Typography.Title>
+      </div>
       <Row gutter={[24, 24]} justify="center">
         {images.length === 0 && !loading && <Col span={24}><Empty description="No images" /></Col>}
         {images.map((img, idx) => (
           <Col xs={24} sm={12} md={8} key={img + idx}>
             <Card
               hoverable
-              cover={<img alt="dog" src={img} style={{ height: 220, objectFit: 'cover', borderRadius: 12 }} />}
-              style={{ borderRadius: 16, boxShadow: '0 2px 16px #a78bfa22' }}
+              cover={
+                <img
+                  alt="dog"
+                  src={img}
+                  style={{ height: 220, objectFit: 'cover', borderRadius: 12, transition: 'box-shadow 0.3s', width: '100%', display: 'block' }}
+                  className="dog-img-hover"
+                />
+              }
+              style={{ borderRadius: 16, boxShadow: '0 2px 16px #a78bfa22', padding: 0, height: 220, display: 'flex', alignItems: 'stretch' }}
+              bodyStyle={{ padding: 0, height: 0 }}
             />
           </Col>
         ))}
@@ -48,6 +59,11 @@ const InfiniteScroll: React.FC = () => {
         {loading && <Spin size="large" />}
         {error && <Typography.Text type="danger">{error}</Typography.Text>}
       </div>
+      <style>{`
+        .dog-img-hover:hover {
+          box-shadow: 0 8px 32px #7c3aed55;
+        }
+      `}</style>
     </div>
   );
 };
